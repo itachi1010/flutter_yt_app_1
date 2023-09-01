@@ -1,11 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-// Add this import statement
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-
-
-
 
 
 void main() {
@@ -135,7 +132,7 @@ class _YoutubeDownloaderScreenState extends State<YoutubeDownloaderScreen> {
   void download() async {
     String url = linkController.text;
 
-    String apiUrl = 'http://localhost:5000/download';  // Replace with your backend server URL
+    String apiUrl = 'http://127.0.0.1:8000/';  // Replace with your backend server URL
 
     // Send a POST request to the backend API
     await http.post(Uri.parse(apiUrl), body: {
@@ -153,16 +150,15 @@ class _YoutubeDownloaderScreenState extends State<YoutubeDownloaderScreen> {
     // Implement the pause/resume logic
   }
 
-Future<void> _openFolderPicker() async {
-  String? folderPath = await FilePicker.platform.getDirectoryPath();
+  Future<void> _openFolderPicker() async {
+    String? folderPath = await FilePicker.platform.getDirectoryPath();
 
-  if (folderPath != null) {
-    Directory folder = Directory(folderPath);
-    setState(() {
-      downloadDirectory = folder.path;
-      directoryController.text = downloadDirectory;
-    });
+    if (folderPath != null) {
+      Directory folder = Directory(folderPath);
+      setState(() {
+        downloadDirectory = folder.path;
+        directoryController.text = downloadDirectory;
+      });
+    }
   }
-}
-
 }
